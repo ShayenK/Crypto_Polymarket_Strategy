@@ -5,7 +5,7 @@ import pandas as pd
 from functools import reduce
 from datetime import datetime
 from dataclasses import dataclass
-from typing import Optional, Dict, List, Tuple, Any
+from typing import Optional, List
 
 @dataclass(frozen=True)
 class CandleData:

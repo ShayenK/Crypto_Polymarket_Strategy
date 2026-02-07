@@ -1,2 +1,2 @@
-data/**/*.csv
-models/**/*.pkl
+analysis/data/**/*.csv
+analysis/models/**/*.pkl
