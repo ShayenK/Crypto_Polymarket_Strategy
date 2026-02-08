@@ -322,7 +322,7 @@ class BacktestEngine:
             self.portfolio_manager.add_trade_position(trade_positions)
         
         # Return Results
-        trade_pos, prob_var, equity = self.portfolio_manager.return_portfolio_results()    
+        trade_pos, prob_var, equity = self.portfolio_manager.return_portfolio_results()
         self.results.return_results(trade_pos, prob_var, equity)
 
         return None
@@ -339,6 +339,109 @@ class BacktestEngine:
             print(f"ERROR: {e}")
 
         return None
+    
+    @classmethod
+    def run_backtest_alt(cls, training_df:pd.DataFrame, testing_df:pd.DataFrame, config:Dict[str,Any], model_parameters:Dict[str,Any]
+                         ) -> Tuple[List[TradePosition],List[float],List[float],Dict[str,xgb.XGBClassifier],List[str]]:
+        
+        train_df = training_df.copy().dropna()
+        models:Optional[Dict[str,xgb.XGBClassifier]] = {symbol: None for symbol in config['symbols']}
+        for symbol in config['symbols']:
+            non_feature_columns = [
+                f'{sym}_{col}'
+                for sym in config['symbols']
+                for col in ['open', 'high', 'low', 'close', 'volume', 'target']
+            ]
+            feature_columns = [col for col in train_df.columns if col not in non_feature_columns]
+            target = f'{symbol}_target'
+            X = train_df[feature_columns].values
+            y = train_df[target].values
+            data_len = int(len(X) * 0.8)
+            X_train = X[:data_len]
+            y_train = y[:data_len].flatten()
+            X_validation = X[data_len:]
+            y_validation = y[data_len:].flatten()
+            model = xgb.XGBClassifier(
+                objective='binary:logistic',
+                eval_metric='logloss',
+                **model_parameters,
+                n_jobs=4,
+                verbosity=0
+            )
+            model.fit(
+                X_train, y_train,
+                eval_set=[(X_validation, y_validation)],
+                verbose=False
+            )
+            models[symbol] = model
+
+        ## Backtest Model
+        portfolio_manager:BacktestPortfolioManager = BacktestPortfolioManager(config['starting_equity'])
+        pending_entries:Optional[Dict[str,TradePosition]] = {symbol: None for symbol in config['symbols']}
+        current_positions:Optional[Dict[str,TradePosition]] = {symbol: None for symbol in config['symbols']}
+        test_df:pd.DataFrame = testing_df.copy().dropna()
+
+        for index, row in test_df.iterrows():
+            current_close = {symbol: row[f'{symbol}_close'] for symbol in config['symbols']}
+            current_open = {symbol: row[f'{symbol}_open'] for symbol in config['symbols']}
+
+            trade_positions = {}
+
+            for symbol in config['symbols']:
+                
+                # Entry if pending signal for this symbol
+                if pending_entries[symbol]:
+                    current_positions[symbol] = pending_entries[symbol]
+                    current_positions[symbol].time = int(index.timestamp())
+                    current_positions[symbol].entry_price = current_open[symbol]
+                    pending_entries[symbol] = None
+                
+                # Exit if in trade for this symbol
+                if current_positions[symbol]:
+                    pos = current_positions[symbol]
+                    pos.exit_price = current_close[symbol]
+                    
+                    if pos.direction == "UP" and pos.entry_price <= current_close[symbol]:
+                        pos.returns = 1
+                    elif pos.direction == "DOWN" and pos.entry_price >= current_close[symbol]:
+                        pos.returns = 1
+                    else:
+                        pos.returns = -1
+                        
+                    trade_positions[symbol] = copy.copy(pos)
+                    current_positions[symbol] = None
+
+                # Generate Entry Probability
+                features = row[feature_columns].values.reshape(1, -1)
+                y_pred_proba = models[symbol].predict_proba(features)[0, 1]
+
+                # Pending Order Generation (per symbol)
+                if y_pred_proba >= config['upper_threshold']:
+                    pending_entries[symbol] = TradePosition(
+                        symbol=symbol,
+                        time=None,
+                        pred_proba=y_pred_proba,
+                        direction="UP",
+                        entry_price=None,
+                        exit_price=None,
+                        returns=None
+                    )
+                elif y_pred_proba <= config['lower_threshold']:
+                    pending_entries[symbol] = TradePosition(
+                        symbol=symbol,
+                        time=None,
+                        pred_proba=y_pred_proba,
+                        direction="DOWN",
+                        entry_price=None,
+                        exit_price=None,
+                        returns=None
+                    )
+            
+            portfolio_manager.add_trade_position(trade_positions)
+        
+        trade_pos, prob_var, equity = portfolio_manager.return_portfolio_results()
+    
+        return trade_pos, prob_var, equity, models, feature_columns
     
 def main():
 
