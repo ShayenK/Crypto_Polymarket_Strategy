@@ -28,8 +28,8 @@ class DataSplit:
         testing_df = pd.read_csv(testing_filepath)
         train_start = pd.to_datetime(training_df.iloc[0]['time'], unit='s') 
         train_end = pd.to_datetime(training_df.iloc[-1]['time'], unit='s') 
-        test_start = pd.to_datetime(training_df.iloc[0]['time'], unit='s') 
-        test_end = pd.to_datetime(training_df.iloc[-1]['time'], unit='s') 
+        test_start = pd.to_datetime(testing_df.iloc[0]['time'], unit='s') 
+        test_end = pd.to_datetime(testing_df.iloc[-1]['time'], unit='s') 
         print(f"INFO: training ({train_start} -> {train_end})")
         print(f"INFO: testing ({test_start} -> {test_end})")
 

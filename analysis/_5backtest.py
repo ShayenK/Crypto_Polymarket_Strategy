@@ -193,7 +193,7 @@ class BacktestEngine:
         self.training_df:Optional[pd.DataFrame] = None
         self.testing_df:Optional[pd.DataFrame] = None
         self.models:Dict[str,xgb.XGBClassifier] = {}
-        self.__prepare_dataset()
+        self.valid:bool = self.__prepare_dataset()
 
     def __prepare_dataset(self) -> bool:
         
@@ -330,6 +330,9 @@ class BacktestEngine:
     def run_backtest(self) -> None:
 
         # Run Single Instance
+        if not self.valid:
+            print("ERROR: invalid datetime periods given")
+            return None
         try:
             self._train_model()
             self._backtest_engine()
@@ -376,7 +379,7 @@ class BacktestEngine:
             models[symbol] = model
 
         ## Backtest Model
-        portfolio_manager:BacktestPortfolioManager = BacktestPortfolioManager(config['starting_equity'])
+        portfolio_manager:BacktestPortfolioManager = BacktestPortfolioManager(0)
         pending_entries:Optional[Dict[str,TradePosition]] = {symbol: None for symbol in config['symbols']}
         current_positions:Optional[Dict[str,TradePosition]] = {symbol: None for symbol in config['symbols']}
         test_df:pd.DataFrame = testing_df.copy().dropna()
@@ -447,8 +450,8 @@ def main():
 
     config = {
         'filepath': 'analysis/data/crypto_1h_features.csv',
-        'start': '2025-08-01',
-        'end': '2025-12-30',
+        'start': '2025-07-30',
+        'end': '2025-12-31',
         'symbols': ['BTCUSD', 'ETHUSD', 'SOLUSD', 'XRPUSD'],
         'starting_equity': 100,
         'training_periods': 4,
