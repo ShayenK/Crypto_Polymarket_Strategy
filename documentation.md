@@ -577,12 +577,12 @@ Implementation:
   * storage/
     * data_attributes.py
     * memory.py
-    * trade_log.py
+    * trade_log.csv
   * strategy/
     * engine.py
-  * main.py
   * config.py
-- design:
+  * main.py
+  * test.py
 
 Results:
 
