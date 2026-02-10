@@ -448,9 +448,9 @@ class BacktestEngine:
 def main():
 
     config = {
-        'filepath': 'analysis/data/crypto_1h_features.csv',
-        'start': '2025-07-30',
-        'end': '2025-12-31',
+        'filepath': 'analysis/data/crypto_1h_testing.csv',
+        'start': '2025-02-30',
+        'end': '2025-09-31',
         'symbols': ['BTCUSD', 'ETHUSD', 'SOLUSD', 'XRPUSD'],
         'starting_equity': 100,
         'training_periods': 4,

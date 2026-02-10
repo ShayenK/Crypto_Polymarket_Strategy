@@ -300,7 +300,7 @@ def main() -> None:
     
     config = {
         'filepath': 'analysis/data/crypto_1h_testing.csv',
-        'start': '2025-08-29',
+        'start': '2025-04-01',
         'end': '2026-01-31',
         'symbols': ['BTCUSD', 'SOLUSD', 'ETHUSD', 'XRPUSD'],
         'starting_equity': 100,
@@ -309,7 +309,7 @@ def main() -> None:
         'walk_forward_shift_periods': 1,
         'upper_threshold': 0.505,
         'lower_threshold': 0.495,
-        'permutation_runs': 2
+        'permutation_runs': 100
     }
     model_parameters = {
         'n_estimators': 500,
