@@ -2,3 +2,4 @@ algorithm/production/**/*.pkl
 analysis/data/**/*.csv
 analysis/models/**/*.pkl
 analysis/results/**/*.png
+.env
