@@ -69,7 +69,7 @@
 - for the following assets: BTCUSD, ETHUSD, SOLUSD, XRPUSD
 
 === Feature Engineering: ===
-- added all previous calculations but for all assets
+- added all previous calculations for all 4 assets
 - all included in one wide dataset
 - 144 features per asset
 

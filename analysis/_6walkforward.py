@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 from typing import Optional, Dict, List, Tuple, Any
 from _5backtest import TradePosition, BacktestEngine
 from warnings import filterwarnings
-
 filterwarnings('ignore')
 np.random.seed(21)
 
@@ -259,6 +258,15 @@ class WalkForwardModelEvaluation:
 
         return None
     
+    def model_evaluation(self) -> None:
+
+        # Return Results
+        self._calculate_model_statistics()
+        self._print_model_statistics()
+        self._plot_model_statistics()
+
+        return None
+    
     def save_models(self) -> None:
 
         # Save All Models
@@ -266,15 +274,6 @@ class WalkForwardModelEvaluation:
         for symbol in self.symbols:
             for i, model in enumerate(self.all_models[symbol]):
                 joblib.dump(model, f"analysis/models/{symbol}_model_{i}.pkl")
-
-        return None
-    
-    def model_evaluation(self) -> None:
-
-        # Return Results
-        self._calculate_model_statistics()
-        self._print_model_statistics()
-        self._plot_model_statistics()
 
         return None
     

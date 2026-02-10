@@ -13,7 +13,7 @@ class FeatureEngineering:
     def _engineer_features(self, periods:List[int], save_filepath:str) -> None:
 
         # Feature Engineering into Dataset
-        df = self.df.copy(deep=True)
+        df = self.df.copy()
         ep = 1e-10
         for symbol in self.symbols:
             # ŷ -> Target Feature
@@ -99,12 +99,15 @@ class FeatureEngineering:
                     (signed_volume.rolling(period, min_periods=1).sum().abs() + ep)
                 )
 
-        print("INFO: outputing file...")
+        # Pruning Dataset
         df['time'] = df['time'].astype('int64') // 10**9
         df = df.dropna()
+
+        print("INFO: outputing file...")
         df.to_csv(save_filepath, index=False)
         print("INFO: file output complete")
         self.df = df
+
         return None
 
 def main() -> None:

@@ -84,8 +84,8 @@ def main() -> None:
 
     # 2. Visual Inspection
     data_check._visual_inspection(
-        '2026-01-01',
-        '2026-02-10'
+        '2023-03-01',
+        '2023-03-30'
     )
 
     return None

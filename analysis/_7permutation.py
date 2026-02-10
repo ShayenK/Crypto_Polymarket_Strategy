@@ -3,11 +3,10 @@ import numpy as np
 import pandas as pd
 import xgboost as xgb
 import matplotlib.pyplot as plt
-from typing import Optional, Dict, List, Tuple, Any
+from typing import Optional, Dict, List, Any
 from _5backtest import TradePosition, BacktestPortfolioManager
 from _6walkforward import WalkForwardAnalysis
 from warnings import filterwarnings
-
 filterwarnings('ignore')
 
 class PermutationResults:
@@ -300,9 +299,9 @@ class PermutationAnalysis:
 def main() -> None:
     
     config = {
-        'filepath': 'analysis/data/crypto_1h_training.csv',
-        'start': '2022-01-01',
-        'end': '2025-03-30',
+        'filepath': 'analysis/data/crypto_1h_testing.csv',
+        'start': '2025-08-29',
+        'end': '2026-01-31',
         'symbols': ['BTCUSD', 'SOLUSD', 'ETHUSD', 'XRPUSD'],
         'starting_equity': 100,
         'training_periods': 4,
@@ -310,7 +309,7 @@ def main() -> None:
         'walk_forward_shift_periods': 1,
         'upper_threshold': 0.505,
         'lower_threshold': 0.495,
-        'permutation_runs': 100
+        'permutation_runs': 2
     }
     model_parameters = {
         'n_estimators': 500,

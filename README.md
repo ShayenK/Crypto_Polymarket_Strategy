@@ -22,6 +22,8 @@ There are frequent occurance where maintainance is required: such as monthly rec
 
 #### File Directory
 
+Maintainance will require in-depth knowledge of the directory
+
 Algorithm:
 ```
 ├── algorithm/
@@ -68,11 +70,19 @@ Every month recalibrate the models by going to the analysis directory and conduc
 #### Risk Management
 Position size determined by the kelly fraction, ensure that model does not exceed tail risk thresholds for tolerance, else recalibrate or stop the model.
 
+tail risk thresholds includes:
+- exceeds walkforward (testing) max-consecutive loss streak
+- exceeds walkforward (testing) avg-consecutive loss streak
+- monthly live win-rate degradation below 48% for
+    * month since model inception
+    * 5 day-average
+    * 3 day-average
+
 #### Tracking
 Ensure to update spreadsheet of monthly trade logs upon recalibration period. Furthermore clear the previous trade-logs to free up space.
 
 #### Future Considerations
-An effort to expand to other prediction market assets such as ETHUSD, SOLUSD, & XRPUSD using this exact framework could be possible in the future, which could potentially improve the predictive element of the system as a whole.
+An effort to expand to retrieve additional volume or microstructure dynamics should be considered as the viability of this strategy using the current feature set is likely to wane lower than the 51% prediction accuracy mark. Should the win-rate ever start to show consistant degradation below the 51% mark, the strategy should retired.
 
 
 ## Statements

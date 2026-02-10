@@ -28,7 +28,7 @@ class BacktestPortfolioManager:
         # Add list of Trade Positions (each symbol)
         if not trade_positions: return None
         trade_positions = copy.copy(trade_positions)
-        for symbol, trade_position in trade_positions.items():
+        for _, trade_position in trade_positions.items():
             self.full_trade_positions.append(copy.copy(trade_position))
             prob_var = abs(trade_position.pred_proba - 0.5)
             self.full_probability_variance.append(prob_var)
@@ -244,7 +244,7 @@ class BacktestEngine:
                 eval_set=[(X_validation, y_validation)],
                 verbose=True
             )
-            self.models[f'{symbol}'] = model
+            self.models[symbol] = model
 
         return None
     
@@ -267,7 +267,7 @@ class BacktestEngine:
             current_close = {symbol: row[f'{symbol}_close'] for symbol in self.config['symbols']}
             current_open = {symbol: row[f'{symbol}_open'] for symbol in self.config['symbols']}
             
-            trade_positions = {}  # Dictionary, not list
+            trade_positions = {}
             
             for symbol in self.config['symbols']:
 
@@ -347,7 +347,7 @@ class BacktestEngine:
     def run_backtest_alt(cls, training_df:pd.DataFrame, testing_df:pd.DataFrame, config:Dict[str,Any], model_parameters:Dict[str,Any]
                          ) -> Tuple[List[TradePosition],List[float],List[float],Dict[str,xgb.XGBClassifier],List[str]]:
         
-        train_df = training_df.copy().dropna()
+        train_df = training_df.dropna().copy()
         models:Optional[Dict[str,xgb.XGBClassifier]] = {symbol: None for symbol in config['symbols']}
         for symbol in config['symbols']:
             non_feature_columns = [
@@ -382,14 +382,13 @@ class BacktestEngine:
         portfolio_manager:BacktestPortfolioManager = BacktestPortfolioManager(0)
         pending_entries:Optional[Dict[str,TradePosition]] = {symbol: None for symbol in config['symbols']}
         current_positions:Optional[Dict[str,TradePosition]] = {symbol: None for symbol in config['symbols']}
-        test_df:pd.DataFrame = testing_df.copy().dropna()
+        test_df:pd.DataFrame = testing_df.dropna().copy()
 
         for index, row in test_df.iterrows():
             current_close = {symbol: row[f'{symbol}_close'] for symbol in config['symbols']}
             current_open = {symbol: row[f'{symbol}_open'] for symbol in config['symbols']}
 
             trade_positions = {}
-
             for symbol in config['symbols']:
                 
                 # Entry if pending signal for this symbol
