@@ -1,4 +1,5 @@
 import time
+import copy
 import requests
 from datetime import datetime
 from typing import Optional, Dict, List
@@ -100,6 +101,6 @@ class CollectionAgent:
         if not check_1: return
         self._reset_recent_candle_data()
         self._get_candle_data()
-        dict_recent_candle_data = self.recent_candle_data.copy(deep=True)   # Deepcopy for safety
+        dict_recent_candle_data = copy.deepcopy(self.recent_candle_data)   # Deepcopy for safety
 
         return dict_recent_candle_data

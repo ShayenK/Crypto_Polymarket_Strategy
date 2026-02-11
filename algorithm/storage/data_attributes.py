@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class TradePosition:
+    symbol:str
     entry_proba:float
     entry_time:int
     entry_price:float
