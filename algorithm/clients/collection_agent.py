@@ -13,13 +13,13 @@ from config import (
 
 class CollectionAgent:
     def __init__(self):
-        self.recent_candle_data:Dict[str,List[CandleData]] = {symbol: [] for symbol, _ in SYMBOLS_MAP.items()}
+        self.recent_candle_data:Dict[str,List[CandleData]] = {symbol: [] for symbol in SYMBOLS_MAP.keys()}
         self.last_hour:int = -1
 
     def _reset_recent_candle_data(self) -> None:
 
         # Reset recent_candle_data state variable
-        self.recent_candle_data = {symbol: [] for symbol in SYMBOLS_MAP}
+        self.recent_candle_data = {symbol: [] for symbol in SYMBOLS_MAP.keys()}
 
         return
     
@@ -43,7 +43,7 @@ class CollectionAgent:
 
         # Retrieve recent_candle_data (1 hour)
         try:
-            for symbol, _ in SYMBOLS_MAP.items():
+            for symbol in SYMBOLS_MAP.keys():
                 unix_time = self._get_recent_market_time()
                 itr = 0
                 while True:

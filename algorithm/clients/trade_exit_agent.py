@@ -13,12 +13,12 @@ from config import (
 
 class TradeExitAgent:
     def __init__(self):
-        self.redeemed_positions:Dict[str,List[TradePosition]] = {symbol: [] for symbol, _ in SYMBOLS_MAP.items()}
+        self.redeemed_positions:Dict[str,List[TradePosition]] = {symbol: [] for symbol in SYMBOLS_MAP.keys()}
 
     def _reset_redeemed_positions(self) -> None:
 
         # Resets all redeemed trade positions
-        self.redeemed_positions = {symbol: [] for symbol, _ in SYMBOLS_MAP.items()}
+        self.redeemed_positions = {symbol: [] for symbol in SYMBOLS_MAP.keys()}
 
         return
     
@@ -31,7 +31,7 @@ class TradeExitAgent:
     def _exit_positions(self, entery_trade_positions:Dict[str,List[TradePosition]]) -> None:
 
         # Sequentially Iterate Over Trade Positions and Redeem
-        for symbol, _ in SYMBOLS_MAP.items():
+        for symbol in SYMBOLS_MAP.keys():
             unix_time = self._get_recent_time()
             for trade_position in entery_trade_positions[symbol]:
                 if (unix_time - trade_position.exit_time) >= (900 * POST_REDEMPTION_PERIODS):

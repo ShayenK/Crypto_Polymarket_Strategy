@@ -5,7 +5,7 @@ import requests
 from zoneinfo import ZoneInfo
 from dataclasses import replace
 from typing import Optional, Dict
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 from py_clob_client.client import ClobClient
 from py_clob_client.order_builder.constants import BUY
 from py_clob_client.clob_types import MarketOrderArgs, OrderType
@@ -26,7 +26,7 @@ from config import (
 
 class TradeEntryAgent:
     def __init__(self):
-        self.current_positions:Dict[str,Optional[TradePosition]] = {symbol: None for symbol, _ in SYMBOLS_MAP.items()}
+        self.current_positions:Dict[str,Optional[TradePosition]] = {symbol: None for symbol in SYMBOLS_MAP.keys()}
         self._client:ClobClient = self.__client_authentication()
 
     def __client_authentication(self) -> ClobClient:
@@ -51,7 +51,7 @@ class TradeEntryAgent:
     def _reset_current_positions(self) -> None:
 
         # Reset the Current Position (only after has been appended in-memory)
-        self.current_positions = {symbol: None for symbol, _ in SYMBOLS_MAP.items()}
+        self.current_positions = {symbol: None for symbol in SYMBOLS_MAP.keys()}
 
         return
     
@@ -123,7 +123,7 @@ class TradeEntryAgent:
     
     def _entry_position(self, predictions:Dict[str,float]) -> None:
 
-        for symbol, _ in SYMBOLS_MAP.items():
+        for symbol in SYMBOLS_MAP.keys():
             prediction = predictions[symbol]
 
             # Check for None Predictions
