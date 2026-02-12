@@ -189,7 +189,7 @@ class TradeEntryAgent:
         Args:
             predictions:Dict[str,float] -> a dict of symbol prediction values based on symbol
         Returns:
-            entered_trade_positions:Dict[str,TradePositon] -> a dict of symbol trade positions that can be stored for later redemption
+            entered_trade_positions:Dict[str,TradePosition] -> a dict of symbol trade positions that can be stored for later redemption
         """
 
         if not predictions: return None
