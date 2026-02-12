@@ -540,6 +540,13 @@ Evalutaion Metrics:
 
 Results:
 - in-sample results:
+  PERMUTATION ANALYSIS SUMMARY:
+  -----------------------------
+  Base Strategy Return: 6627
+  Average Permutated Return: 970.41
+  Max Permutated Return: 1916
+  p-value: 0.00990
+  -----------------------------
 - out-of-sample results:
 
 Interpretation:
