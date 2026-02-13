@@ -34,9 +34,9 @@ class Memory:
 
         return pending_trades
         
-    def remove_finished_positions(self, redeemed_trade_positions: Dict[str, List[TradePosition]] | None) -> None:
+    def remove_finished_positions(self, redeemed_trade_positions:Dict[str,List[TradePosition]]) -> None:
         
-        if redeemed_trade_positions is None:
+        if not redeemed_trade_positions or not any(redeemed_trade_positions[symbol] for symbol in SYMBOLS_MAP.keys()):
             return
         for symbol in SYMBOLS_MAP.keys():
             redeemed_list = redeemed_trade_positions.get(symbol, [])
@@ -49,7 +49,6 @@ class Memory:
             }
             if not completed_order_ids:
                 continue
-            before = len(self.pending_trades[symbol])
             self.pending_trades[symbol] = [
                 pos for pos in self.pending_trades[symbol]
                 if pos.order_id not in completed_order_ids
@@ -63,11 +62,9 @@ class Memory:
     def __exit__(self, exc_type:Optional[Type[BaseException]], exc_val:Optional[BaseException],
                  exc_tb:Optional[TracebackType]) -> bool:
         
-        # Emergency Logging Procedure in-case of Abrupt Stop to System 
-        pending_trades = any(self.pending_trades[symbol] for symbol in SYMBOLS_MAP.keys())
-        if exc_type is not None or pending_trades:
-            if pending_trades:
-                print("INFO: activating emergency logging procedure")
-                self._tracking.emergency_log_trades(self.pending_trades)
+        # Emergency Logging Procedure In-Case of Abrupt Stop
+        has_pending = any(self.pending_trades[symbol] for symbol in SYMBOLS_MAP.keys())
+        if exc_type is not None or has_pending:
+            self._tracking.emergency_log_trades(self.pending_trades)
 
         return False

@@ -1,3 +1,0 @@
-symbol,entry_proba,entry_time,entry_price,entry_units,direction,yes_token_id,no_token_id,condition_id,order_id,neg_risk,exit_time,exit_price,exit_units,position_status,outcome
-SOLUSD,0.72,1770934150,0.55,100.0,UP,SOLUSD_yes_123,SOLUSD_no_123,cond_solusd_abc123,ord-solusd-003,False,1770937750,,,PENDING,
-XRPUSD,0.72,1770934150,0.55,100.0,UP,XRPUSD_yes_123,XRPUSD_no_123,cond_xrpusd_abc123,ord-xrpusd-004,False,1770937750,,,PENDING,

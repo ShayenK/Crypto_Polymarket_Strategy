@@ -1,8 +1,8 @@
 import os
 import csv
 import functools
-from typing import Callable, Dict, List, Any, Type
 from dataclasses import fields, astuple
+from typing import Callable, Dict, List, Any, Type
 from storage.data_attributes import TradePosition
 from config import (
     SYMBOLS_MAP
@@ -39,10 +39,10 @@ class Tracking:
             
             result = function(*args, **kwargs)
             try:
-                if len(args) < 2:
+                if len(args) < 1:
                     return result
-                redeemed_trade_positions:Dict[str,List[TradePosition]] = args[1]
-                if redeemed_trade_positions is None or not isinstance(redeemed_trade_positions, dict):
+                redeemed_trade_positions:Dict[str,List[TradePosition]] = args[0]
+                if not redeemed_trade_positions or not any(redeemed_trade_positions[symbol] for symbol in SYMBOLS_MAP.keys()):
                     return result
                 with open(self.filepath, mode='a', newline='') as f:
                     writer = csv.writer(f)
@@ -59,7 +59,7 @@ class Tracking:
 
     def emergency_log_trades(self, in_memory_trade_positions:Dict[str,List[TradePosition]]) -> None:
         """
-        Emergency trade logging if memory function crashes
+        Emergency trade logging if memory function crashes or closes suddenly
 
         Args:
             in_memory_trade_positions:Dict[str,List[TradePosition]] -> all of the current pending trades stored in-memory
@@ -68,12 +68,14 @@ class Tracking:
         """
 
         # Emergency Logging On Sudden Algorithm Crash
-        if in_memory_trade_positions:
-            with open(file=self.filepath, mode='a', newline='') as f:
-                writer = csv.writer(f)
-                for symbol in SYMBOLS_MAP.keys():
-                    for in_memory_trade_position in in_memory_trade_positions[symbol]:
-                        values_tuple = astuple(in_memory_trade_position)
-                        writer.writerow(values_tuple)
+        if not any(in_memory_trade_positions[symbol] for symbol in SYMBOLS_MAP.keys()):
+            return
+        print("INFO: activating exit logging procedure")
+        with open(file=self.filepath, mode='a', newline='') as f:
+            writer = csv.writer(f)
+            for symbol in SYMBOLS_MAP.keys():
+                for in_memory_trade_position in in_memory_trade_positions[symbol]:
+                    values_tuple = astuple(in_memory_trade_position)
+                    writer.writerow(values_tuple)
 
         return
