@@ -43,14 +43,13 @@ class Memory:
             if not redeemed_list:
                 continue
             completed_order_ids = {
-                pos.order_id
-                for pos in redeemed_list
+                pos.order_id for pos in redeemed_list 
                 if pos.position_status == "COMPLETE"
             }
             if not completed_order_ids:
                 continue
             self.pending_trades[symbol] = [
-                pos for pos in self.pending_trades[symbol]
+                pos for pos in self.pending_trades[symbol] 
                 if pos.order_id not in completed_order_ids
             ]
 
