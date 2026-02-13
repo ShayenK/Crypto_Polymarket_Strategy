@@ -3,7 +3,7 @@ import csv
 import functools
 from typing import Callable, Dict, List, Any, Type
 from dataclasses import fields, astuple
-from data_attributes import TradePosition
+from storage.data_attributes import TradePosition
 from config import (
     SYMBOLS_MAP
 )
@@ -27,7 +27,7 @@ class Tracking:
             with open(self.filepath, 'a+', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(self.field_names)
-            print(f"INFO: initialized {self.filepath} csv with headers -> {len(self.field_names)} columns")
+            print(f"INFO: initialized {self.filepath} with headers -> {len(self.field_names)} columns")
 
         return
 
@@ -36,27 +36,30 @@ class Tracking:
         # Wrapper Function for Logging Trades
         @functools.wraps(function)
         def wrapper(*args:Any, **kwargs:Any) -> Any:
-
-            append = function(*args, **kwargs)
-            if args:
-                with open(file=self.filepath, mode='a', newline='') as f:
+            
+            result = function(*args, **kwargs)
+            try:
+                if len(args) < 2:
+                    return result
+                redeemed_trade_positions:Dict[str,List[TradePosition]] = args[1]
+                if redeemed_trade_positions is None or not isinstance(redeemed_trade_positions, dict):
+                    return result
+                with open(self.filepath, mode='a', newline='') as f:
                     writer = csv.writer(f)
-                    first_arg:Dict[str,List[TradePosition]] = args[0]
                     for symbol in SYMBOLS_MAP.keys():
-                        for redeemed_position in first_arg[symbol]:
-                            if not redeemed_position.outcome == "COMPLETE": 
-                                continue
-                            values_tuple = astuple(redeemed_position)
-                            writer.writerow(values_tuple)
+                        for pos in redeemed_trade_positions.get(symbol, []):
+                            if pos.position_status == "COMPLETE":
+                                writer.writerow(astuple(pos))
+            except Exception as e:
+                print(f"WARNING: failed to log completed trades: {e}")
 
-            return append
+            return result
 
         return wrapper
-    
-    @classmethod
-    def emergency_log_trades(cls, filepath:str, in_memory_trade_positions:Dict[str,List[TradePosition]]) -> None:
+
+    def emergency_log_trades(self, in_memory_trade_positions:Dict[str,List[TradePosition]]) -> None:
         """
-        Emergency log trade if memory function crashes
+        Emergency trade logging if memory function crashes
 
         Args:
             in_memory_trade_positions:Dict[str,List[TradePosition]] -> all of the current pending trades stored in-memory
@@ -66,7 +69,7 @@ class Tracking:
 
         # Emergency Logging On Sudden Algorithm Crash
         if in_memory_trade_positions:
-            with open(file=filepath, mode='a', newline='') as f:
+            with open(file=self.filepath, mode='a', newline='') as f:
                 writer = csv.writer(f)
                 for symbol in SYMBOLS_MAP.keys():
                     for in_memory_trade_position in in_memory_trade_positions[symbol]:
