@@ -531,7 +531,7 @@ Notes:
 Hypthosis Testing:
 - model robustness:
   * H₀ = permutation strategy proves no feature-target relationship within baseline model
-  * H₁ = permutation strategy proves feature-target relationship is structure within baseline model
+  * H₁ = permutation strategy proves feature-target relationship is structure within baseline model   ✅
 
 Evalutaion Metrics:
 - model robustness:
@@ -548,13 +548,24 @@ Results:
   p-value: 0.00990
   -----------------------------
 - out-of-sample results:
+  PERMUTATION ANALYSIS SUMMARY:
+  -----------------------------
+  Base Strategy Return: 756
+  Average Permutated Return: 159.73
+  Max Permutated Return: 408
+  p-value: 0.00990
+  -----------------------------
 
 Interpretation:
 - model robustness:
+  * both in/out sample groups vastly outperform randomised permutations
+  * both in/out sample groups show statistically significant results with p-values <0.05
 
 Notes:
 - observations:
+  * both in/out sample groups show much better results than random suggesting that we can reject the null hypothesis confidently
 - implications:
+  * model is ready for live testing, once infrastructure is set up
 
 === Forward Testing: ===
 
