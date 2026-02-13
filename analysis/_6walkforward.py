@@ -378,7 +378,7 @@ def main() -> None:
 
     config = {
         'filepath': 'analysis/data/crypto_1h_testing.csv',
-        'start': '2025-04-01',
+        'start': '2025-08-01',
         'end': '2026-01-31',
         'symbols': ['BTCUSD', 'ETHUSD', 'SOLUSD', 'XRPUSD'],
         'starting_equity': 100,

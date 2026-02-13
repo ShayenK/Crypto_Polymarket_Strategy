@@ -137,7 +137,7 @@ def main() -> None:
 
     data.collect_candle_data(
         '2022-01-01 00:00:00',
-        '2026-02-07 00:00:00'
+        '2026-02-13 00:00:00'
     )
 
     return None

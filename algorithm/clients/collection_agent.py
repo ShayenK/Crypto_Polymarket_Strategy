@@ -101,6 +101,6 @@ class CollectionAgent:
         if not check_1: return
         self._reset_recent_candle_data()
         self._get_candle_data()
-        dict_recent_candle_data = copy.deepcopy(self.recent_candle_data)   # Deepcopy for safety
+        dict_candle_data = copy.deepcopy(self.recent_candle_data)   # Deepcopy for safety
 
-        return dict_recent_candle_data
+        return dict_candle_data
