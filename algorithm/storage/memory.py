@@ -30,9 +30,9 @@ class Memory:
         # Returns all the Current Pending Positions In-Memory
         if not any(self.pending_trades[symbol] for symbol in SYMBOLS_MAP.keys()):
             return
-        pending_trades = copy.deepcopy(self.pending_trades)
+        pending_trade_positions = copy.deepcopy(self.pending_trades)
 
-        return pending_trades
+        return pending_trade_positions
         
     def remove_finished_positions(self, redeemed_trade_positions:Dict[str,List[TradePosition]]) -> None:
         
