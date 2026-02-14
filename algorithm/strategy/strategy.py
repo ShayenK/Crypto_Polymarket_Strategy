@@ -35,10 +35,10 @@ class StrategyEngine:
 
         return
     
-    def _reset_prediction_rows(self):
+    def _reset_prediction_row(self):
 
         # Reset Prediction Rows
-        self.prediction_rows = {symbol:None for symbol in SYMBOLS_MAP.keys()}
+        self.prediction_row = None
 
         return
     
@@ -58,8 +58,7 @@ class StrategyEngine:
                 print("ERROR: unable to set up dataframe")
                 return False
         combined = reduce(lambda left, right: pd.merge(left, right, on='time', how='outer'), df_list)
-        combined = combined.sort_index()
-        combined = combined[['time'] + [col for col in combined.columns if col != 'time']]
+        combined = combined[['time'] + [col for col in combined.columns if col != 'time']]          # reorder column names
         self.df = combined
 
         return True
@@ -141,21 +140,19 @@ class StrategyEngine:
             
         return False
     
-    def _prepare_prediction_rows(self) -> bool:
+    def _prepare_prediction_row(self) -> bool:
 
         # Transform DF to Feature Set
         try:
             non_feature_columns = ['time'] + [
-                f'{symbol}_{column}'
-                for symbol in SYMBOLS_MAP.keys()
+                f'{symbol}_{column}' for symbol in SYMBOLS_MAP.keys()
                 for column in ['open', 'high', 'low', 'close', 'volume', 'target']
             ]
             feature_columns = [col for col in self.df.columns if col not in non_feature_columns]
             self.prediction_row = self.df.iloc[-1][feature_columns].values
-            self.prediction_row
             return True
         except Exception as e:
-            print("ERROR: unable to prepare prediction rows")
+            print(f"ERROR: unable to prepare prediction rows {e}")
 
         return False
     
@@ -187,14 +184,14 @@ class StrategyEngine:
         if not dict_candle_data:
             return
         self._reset_dataframe()
-        self._reset_prediction_rows()
+        self._reset_prediction_row()
         check_1 = self._prepare_dataframe(dict_candle_data)
         if not check_1:
             return
         check_2 = self._calculate_features()
         if not check_2:
             return
-        check_3 = self._prepare_prediction_rows()
+        check_3 = self._prepare_prediction_row()
         if not check_3:
             return
         predictions = self._predictions()
