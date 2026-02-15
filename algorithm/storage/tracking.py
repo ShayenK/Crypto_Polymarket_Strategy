@@ -32,8 +32,15 @@ class Tracking:
         return
 
     def log_trades(self, function:Callable) -> Callable:
+        """
+        Trade logging for finished positions.
 
-        # Wrapper Function for Logging Trades
+        Args:
+            function:Callabe -> function as a decorator
+        Returns:
+            None:None -> no output return required
+        """
+        
         @functools.wraps(function)
         def wrapper(*args:Any, **kwargs:Any) -> Any:
             
@@ -59,15 +66,14 @@ class Tracking:
 
     def emergency_log_trades(self, in_memory_trade_positions:Dict[str,List[TradePosition]]) -> None:
         """
-        Emergency trade logging if memory function crashes or closes suddenly
+        Emergency trade logging if memory function crashes or closes suddenly.
 
         Args:
             in_memory_trade_positions:Dict[str,List[TradePosition]] -> all of the current pending trades stored in-memory
         Returns:
-            None
+            None:None -> no output return required
         """
 
-        # Emergency Logging On Sudden Algorithm Crash
         if not any(in_memory_trade_positions[symbol] for symbol in SYMBOLS_MAP.keys()):
             return
         print("INFO: activating exit logging procedure")

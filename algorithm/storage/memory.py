@@ -14,11 +14,18 @@ class Memory:
         self._tracking = Tracking(f'algorithm/storage/{TRADE_LOG_FILEPATH}', TradePosition)
         self.remove_finished_positions = self._tracking.log_trades(self.remove_finished_positions)
 
-    def add_new_trade_position(self, entered_trade_positions:Dict[str,TradePosition]) -> None:
+    def add_new_trade_position(self, entered_trade_positions:Optional[Dict[str,TradePosition]]) -> None:
+        """
+        Add new entry trade position to memory.
 
-        # Appends the New Entered Trade Positions In-Memory
+        Args:
+            entered_trade_positions:Dict[str,TradePosition] -> entry trade position
+        Returns:
+            None:None -> no output return required
+        """
+
         if not entered_trade_positions or not any(entered_trade_positions.values()):
-            return
+            return None
         for symbol, position in entered_trade_positions.items():
             if position is not None:
                 self.pending_trades[symbol].append(position)
@@ -26,18 +33,35 @@ class Memory:
         return
     
     def return_current_positions(self) -> Optional[Dict[str,List[TradePosition]]]:
+        """
+        Memory operation to retrieve pending trade positions for all symbols.
+
+        Args:
+            None:None -> no input arg required
+        Returns:
+            pending_trade_positions:Dict[str,List[TradePosition]] -> current in-memory positions
+        """
 
         # Returns all the Current Pending Positions In-Memory
         if not any(self.pending_trades[symbol] for symbol in SYMBOLS_MAP.keys()):
-            return
+            return None
         pending_trade_positions = copy.deepcopy(self.pending_trades)
 
         return pending_trade_positions
         
     def remove_finished_positions(self, redeemed_trade_positions:Dict[str,List[TradePosition]]) -> None:
+        """
+        Removes redeemed or unresolved positions from memory.
+
+        Args:
+            redeemed_trade_positions:Dict[str,List[TradePosition]] -> modified positions
+        Returns:
+            None:None -> no output return required
+        """
         
-        if not redeemed_trade_positions or not any(redeemed_trade_positions[symbol] for symbol in SYMBOLS_MAP.keys()):
-            return
+        if not redeemed_trade_positions or \
+            not any(redeemed_trade_positions[symbol] for symbol in SYMBOLS_MAP.keys()):
+            return None
         for symbol in SYMBOLS_MAP.keys():
             redeemed_list = redeemed_trade_positions.get(symbol, [])
             if not redeemed_list:

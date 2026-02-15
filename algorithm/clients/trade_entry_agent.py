@@ -184,7 +184,7 @@ class TradeEntryAgent:
         
     def trade_entry(self, predictions:Dict[str,float]) -> Optional[Dict[str,TradePosition]]:
         """
-        Trade entry function that uses prediction at the current candle to enter a trade
+        Trading agent used for entry for all symbols
 
         Args:
             predictions:Dict[str,float] -> a dict of symbol prediction values based on symbol
@@ -192,11 +192,13 @@ class TradeEntryAgent:
             entered_trade_positions:Dict[str,TradePosition] -> a dict of symbol trade positions that can be stored for later redemption
         """
 
-        if not predictions: return None
+        if not predictions:
+            return None
         self._reset_current_positions()
         check_1 = self._get_market()
-        if not check_1: return None
+        if not check_1:
+            return None
         self._entry_position(predictions)
-        entered_trade_positions = copy.deepcopy(self.current_positions)
+        entered_trade_positions = copy.deepcopy(self.current_positions)     # Deepcopy for safety
 
         return entered_trade_positions

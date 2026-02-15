@@ -30,7 +30,7 @@ class StrategyEngine:
     
     def _reset_dataframe(self):
 
-        # Reset DF
+        # Reset Dataframe
         self.df = None
 
         return
@@ -48,24 +48,27 @@ class StrategyEngine:
         df_list = []
         for symbol in SYMBOLS_MAP.keys():
             try:
+        
                 symbol_data = [asdict(candle_data) for candle_data in dict_candle_data[symbol]]
                 df = pd.DataFrame(symbol_data)
                 df = df.add_prefix(f'{symbol}_')
                 df['time'] = pd.to_datetime(df[f'{symbol}_time'], unit='s')
                 df = df.drop(columns=[f'{symbol}_time', f'{symbol}_symbol'])
                 df_list.append(df)
+
             except Exception as e:
                 print("ERROR: unable to set up dataframe")
                 return False
+        
         combined = reduce(lambda left, right: pd.merge(left, right, on='time', how='outer'), df_list)
-        combined = combined[['time'] + [col for col in combined.columns if col != 'time']]          # reorder column names
+        combined = combined[['time'] + [col for col in combined.columns if col != 'time']]      # reorder column names
         self.df = combined
 
         return True
     
     def _calculate_features(self) -> bool:
+        
         try:
-
             df = self.df.copy()
             ep = 1e-14
             new_columns = {}
@@ -151,6 +154,7 @@ class StrategyEngine:
             feature_columns = [col for col in self.df.columns if col not in non_feature_columns]
             self.prediction_row = self.df.iloc[-1][feature_columns].values
             return True
+        
         except Exception as e:
             print(f"ERROR: unable to prepare prediction rows {e}")
 
@@ -166,6 +170,7 @@ class StrategyEngine:
                 predictions[symbol] = self.models[symbol].predict_proba(pred_row)[0,1]
                 print(f"INFO: retrieved prediction for {symbol}")
             return predictions
+        
         except Exception as e:
             print(f"ERROR: unable to generate predictions {e}")
 
@@ -173,7 +178,7 @@ class StrategyEngine:
     
     def model_predictions(self, dict_candle_data:Dict[str,List[CandleData]]) -> Optional[Dict[str,float]]:
         """
-        Function to generate prediction probabilities to guide trading decisions
+        Generates prediction probabilities for all symbols.
 
         Args:
             dict_candle_data:Dict[str,List[CandleData]] -> candle data for all symbols
@@ -181,19 +186,20 @@ class StrategyEngine:
             predictions:Dict[str,float] -> predictions for all symbols
         """
 
-        if not dict_candle_data:
-            return
+        if not dict_candle_data or not all(
+            symbol in dict_candle_data and dict_candle_data[symbol]
+            for symbol in SYMBOLS_MAP.keys()):
+            return None
         self._reset_dataframe()
         self._reset_prediction_row()
         check_1 = self._prepare_dataframe(dict_candle_data)
         if not check_1:
-            return
+            return None
         check_2 = self._calculate_features()
         if not check_2:
-            return
+            return None
         check_3 = self._prepare_prediction_row()
         if not check_3:
-            return
-        predictions = self._predictions()
+            return None
 
-        return predictions
+        return self._predictions()

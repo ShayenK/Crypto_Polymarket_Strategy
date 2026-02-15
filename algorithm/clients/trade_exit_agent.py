@@ -84,15 +84,16 @@ class TradeExitAgent:
 
     def trade_exit(self, entery_trade_positions:Dict[str,List[TradePosition]]) -> Optional[Dict[str,List[TradePosition]]]:
         """
-        Trade exit function that redeems list of all claimable positions
+        Trade agent used for token redemption for all symbols.
 
         Args:
             entered_trade_positions:Dict[str,List[TradePosition]] -> a dict of entered trade positions based on the symbol
         Returns:
-            entered_trade_positions:Dict[str,List[TradePosition]] -> a dict of redeemed trade positions based on the symbol
+            redeemed_trade_positions:Dict[str,List[TradePosition]] -> a dict of redeemed trade positions based on the symbol
         """
 
-        if not entery_trade_positions: return None
+        if not entery_trade_positions:
+            return None
         self._reset_redeemed_positions()
         self._exit_positions(entery_trade_positions)
         redeemed_trade_positions = copy.deepcopy(self.redeemed_positions)

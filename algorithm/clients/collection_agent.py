@@ -89,16 +89,17 @@ class CollectionAgent:
         
     def data_collection(self) -> Optional[Dict[str,List[CandleData]]]:
         """
-        Data collection method to pull recent historical 1 hour candle data from binance for all symbols
+        Data collection agent pulling 1-hour historical klines for all symbols.
 
         Args:
-            None
+            None:None -> no input arg required
         Returns:
             recent_candle_data:Dict[str,List[CandleData]] -> returns most recent klines for MAX_LIST_LEN
         """
 
         check_1 = self._collection_check()
-        if not check_1: return
+        if not check_1: 
+            return None
         self._reset_recent_candle_data()
         self._get_candle_data()
         dict_candle_data = copy.deepcopy(self.recent_candle_data)   # Deepcopy for safety

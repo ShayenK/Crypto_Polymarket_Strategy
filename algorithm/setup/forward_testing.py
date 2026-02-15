@@ -40,7 +40,7 @@ class ForwardTesting:
 
         # Record Probabilities
         if not predictions or not any(predictions[symbol] for symbol in SYMBOLS_MAP.keys()):
-            return
+            return None
         unix_time = self._get_recent_market_time()
         human_time = datetime.fromtimestamp(unix_time, tz=timezone.utc)
         results = [human_time] + [predictions[symbol] for symbol in SYMBOLS_MAP.keys()]

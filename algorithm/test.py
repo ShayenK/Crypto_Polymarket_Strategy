@@ -16,10 +16,11 @@ def main() -> None:
         engine = StrategyEngine()
         testing = ForwardTesting()
 
-        # Testing Loop
+        # Testing Loop with Memory Class Lifecycle as a Focus
         with Memory() as memory:
             while True:
 
+                # Collect, Predict, and Log Prediction
                 dict_candle_data = collection.data_collection()
                 predictions = engine.model_predictions(dict_candle_data)
                 testing.record_probabilities(predictions)
