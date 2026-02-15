@@ -28,12 +28,12 @@ class TradeExitAgent:
 
         return int(time.time())
     
-    def _exit_positions(self, entery_trade_positions:Dict[str,List[TradePosition]]) -> None:
+    def _exit_positions(self, pending_trade_positions:Dict[str,List[TradePosition]]) -> None:
 
         # Sequentially Iterate Over Trade Positions and Redeem
         for symbol in SYMBOLS_MAP.keys():
             unix_time = self._get_recent_time()
-            for trade_position in entery_trade_positions[symbol]:
+            for trade_position in pending_trade_positions[symbol]:
                 if (unix_time - trade_position.exit_time) >= (900 * POST_REDEMPTION_PERIODS):
                     itr = 0
                     while True:
@@ -82,20 +82,21 @@ class TradeExitAgent:
 
         return
 
-    def trade_exit(self, entery_trade_positions:Dict[str,List[TradePosition]]) -> Optional[Dict[str,List[TradePosition]]]:
+    def trade_exit(self, pending_trade_positions:Dict[str,List[TradePosition]]) -> Optional[Dict[str,List[TradePosition]]]:
         """
         Trade agent used for token redemption for all symbols.
 
         Args:
-            entered_trade_positions:Dict[str,List[TradePosition]] -> a dict of entered trade positions based on the symbol
+            pending_trade_positions:Dict[str,List[TradePosition]] -> a dict of pending trade positions based on the symbol
         Returns:
             redeemed_trade_positions:Dict[str,List[TradePosition]] -> a dict of redeemed trade positions based on the symbol
         """
 
-        if not entery_trade_positions:
+        if not pending_trade_positions or \
+            not any(pending_trade_positions[symbol] for symbol in SYMBOLS_MAP.keys()):
             return None
         self._reset_redeemed_positions()
-        self._exit_positions(entery_trade_positions)
+        self._exit_positions(pending_trade_positions)
         redeemed_trade_positions = copy.deepcopy(self.redeemed_positions)
 
         return redeemed_trade_positions
