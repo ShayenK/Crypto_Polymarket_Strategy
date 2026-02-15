@@ -572,13 +572,16 @@ Notes:
 Hypthosis Testing:
 - model validation
   * H₀ = strategy model and assumptions don't hold true in forward testing
-  * H₁ = strategy model and assumptions are validated in forward testing                            
+  * H₁ = strategy model and assumptions are validated in forward testing       
 
 Evalutaion Metrics:
 - model validation:
-  * returns -> consistant with that of backtest
-  * win rate -> at expected levels
+  * evaluate over approximately 1344 trades (14 days)
   * doesn't exceed fat tailed event: max consec losses, max drawdown period
+  * implied win rate vs realised win rate
+  * implied returns vs realised returns
+  * implied expected value vs realised expected value difference
+  * implied equity curve modelling vs realised expected equity curve modelling 
 
 Implementation:
 - model:
@@ -603,12 +606,14 @@ Implementation:
   * test.py
 
 Results:
+- realised results:
+- implied results:
 
 Interpretation:
 
 Notes:
-- implications
-- observations
+- implications:
+- observations:
 
 === Evalutation: ===
 

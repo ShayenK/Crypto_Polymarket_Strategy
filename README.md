@@ -82,7 +82,7 @@ tail risk thresholds includes:
 Ensure to update spreadsheet of monthly trade logs upon recalibration period. Furthermore clear the previous trade-logs to free up space.
 
 #### Future Considerations
-An effort to expand to retrieve additional volume or microstructure dynamics should be considered as the viability of this strategy using the current feature set is likely to wane lower than the 51% prediction accuracy mark. Should the win-rate ever start to show consistant degradation below the 51% mark, the strategy should retired.
+An effort to expand to retrieve additional volume or microstructure dynamics should be considered as the viability of this strategy using the current feature set is likely to wane lower than the 51% prediction accuracy mark. Should the win-rate ever start to show consistant degradation below the 51% mark, the strategy should deprecated.
 
 
 ## Statements
