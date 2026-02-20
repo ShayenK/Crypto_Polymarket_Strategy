@@ -3,3 +3,4 @@ analysis/data/**/*.csv
 analysis/models/**/*.pkl
 analysis/results/**/*.png
 .env
+.venv/
