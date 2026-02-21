@@ -21,7 +21,7 @@ from config import (
     MAX_RETRY_ATTEMPTS,
     UPPER_THRESHOLD,
     LOWER_THRESHOLD,
-    get_usdc_balance
+    TRADE_UNITS
 )
 
 class TradeEntryAgent:
@@ -153,7 +153,7 @@ class TradeEntryAgent:
                 try: 
                     order_args = MarketOrderArgs(
                         token_id=token_id,
-                        amount=round(get_usdc_balance()*0.01, 2),
+                        amount=TRADE_UNITS,
                         side=BUY
                     )
                     signed_order = self._client.create_market_order(order_args)
