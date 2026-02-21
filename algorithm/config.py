@@ -32,4 +32,4 @@ TRADE_UNITS:float = 1.00
 
 # Directory
 TRADE_LOG_FILEPATH:str = 'trade_logs.csv'
-MODEL_FILEPATHS:Dict[str,str] = {symbol: f'{symbol}_live_model.pkl' for symbol, _ in SYMBOLS_MAP.items()}
+MODEL_FILEPATHS:Dict[str,str] = {symbol: f'{symbol}_live_model.pkl' for symbol in SYMBOLS_MAP.keys()}
