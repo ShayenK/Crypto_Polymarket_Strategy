@@ -39,7 +39,7 @@
 ✅ Walk-Forward
   * strategy generalisation & hyperparameter tuning
   * fold model creation
-[ ] Permutation
+✅ Permutation
   * evaluate strategy robustness (statistical significance)
   * analyse random probability density distributions
 [ ] Live-Testing
@@ -570,7 +570,7 @@ Notes:
 === Forward Testing: ===
 
 Hypthosis Testing:
-- model validation
+- model validation:
   * H₀ = strategy model and assumptions don't hold true in forward testing
   * H₁ = strategy model and assumptions are validated in forward testing       
 
@@ -607,13 +607,18 @@ Implementation:
 
 Results:
 - realised results:
-- implied results:
 
 Interpretation:
+- model validation:
+  * "REFER TO EVALUATION METRICS"
 
 Notes:
 - implications:
+  * forward testing only guides with regard to the range of plausible values that we expect to see under a normal distribution 
+  * with a sample size around ~1300 trades the range of plausible values becomes much more narrower giving win rate range of expected outcomes to be 52 +/- 1.32% with a 95% confidence interval
 - observations:
+  * this is only around 15 days of data where it only had time to correctly identify the trend this should give around ~1300 trade records total (obviously not ideal but gives a good idea of what we expect to see)
+  * we should expect the win rate to drift up from 50% -> 52% as we gain more samples
 
 === Evalutation: ===
 
