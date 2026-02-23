@@ -155,7 +155,7 @@ class ForwardTestEvaluation:
             'quarter_kelly': full_kelly / 4
         }
 
-        return None
+        return
 
     def _print_results(self) -> None:
 
@@ -175,7 +175,7 @@ class ForwardTestEvaluation:
         print(f"1/4 KELLY FRACTION: {self.results_map['quarter_kelly']:.2f}%")
         print("--------------------")
 
-        return None
+        return
 
     def _plot_results(self) -> None:
 
@@ -199,7 +199,7 @@ class ForwardTestEvaluation:
         plt.tight_layout()
         plt.show()
 
-        return None
+        return
     
     def evaluate_forward_test(self) -> None:
 
@@ -221,7 +221,7 @@ def main() -> None:
     )
     evalute.evaluate_forward_test()
 
-    return None
+    return
 
 if __name__ == "__main__":
     main()
