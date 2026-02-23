@@ -44,7 +44,7 @@
   * analyse random probability density distributions
 [ ] Live-Testing
   * build live infrastructure
-  * evaluate as extended out sample data (~300)
+  * evaluate as extended out sample data (~1300)
 [ ] Post-Evaluation
   * backtest strategy against live-tested data
   * ensure coherance

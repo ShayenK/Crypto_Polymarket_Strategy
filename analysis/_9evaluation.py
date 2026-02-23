@@ -203,7 +203,7 @@ class ForwardTestEvaluation:
     
     def evaluate_forward_test(self) -> None:
 
-        # Compile together
+        # Compile Together
         self._load_prediction_logs()
         self._retrieve_candle_data()
         self._compare_to_actualised()
