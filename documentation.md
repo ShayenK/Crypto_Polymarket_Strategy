@@ -44,7 +44,7 @@
   * analyse random probability density distributions
 [ ] Live-Testing
   * build live infrastructure
-  * evaluate as extended out sample data (~1300)
+  * evaluate as extended out sample data (2500+)
 [ ] Post-Evaluation
   * backtest strategy against live-tested data
   * ensure coherance
@@ -576,12 +576,10 @@ Hypthosis Testing:
 
 Evalutaion Metrics:
 - model validation:
-  * evaluate over approximately 1344 trades (14 days)
+  * evaluate over approximately 2500+ trades
   * doesn't exceed fat tailed event: max consec losses, max drawdown period
-  * implied win rate vs realised win rate
-  * implied returns vs realised returns
-  * implied expected value vs realised expected value difference
-  * implied equity curve modelling vs realised expected equity curve modelling 
+  * win rate is above 50% -> if just above 50% only then observe more values, if above 51% then model can be live traded.
+  * forward test metrics match or are similar to backtest metrics
 
 Implementation:
 - model:
