@@ -42,10 +42,10 @@
 ✅ Permutation
   * evaluate strategy robustness (statistical significance)
   * analyse random probability density distributions
-[ ] Live-Testing
+✅ Live-Testing
   * build live infrastructure
   * evaluate as extended out sample data (2500+)
-[ ] Post-Evaluation
+✅ Post-Evaluation
   * backtest strategy against live-tested data
   * ensure coherance
 
@@ -605,10 +605,11 @@ Implementation:
 
 Results:
 - realised results:
+  * *Not Viable*
 
 Interpretation:
 - model validation:
-  * "REFER TO EVALUATION METRICS"
+  * *Not Viable*
 
 Notes:
 - implications:
@@ -631,9 +632,19 @@ Evaluation Metrics:
   * same/similar equity curve
 
 Results:
+- realised results:
+  * *Not Viable*
 
 Interpretation:
+- model validation:
+  * *Not Viable*
 
 Notes:
 - implications
+  * *Not Viable*
 - observations
+  * *Not Viable*
+
+NOTICE:
+-------
+The live implementation of this strategy has been suspended - refer to README.md under the disclaimer section
