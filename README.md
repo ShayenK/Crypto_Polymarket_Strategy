@@ -86,13 +86,7 @@ An effort to expand to retrieve additional volume or microstructure dynamics sho
 
 
 ## Statements
-Final regards and statements on this strategy.
-
-#### Rationale Statement
-Strategy was conducted in 2026 during the rise of prediction markets. This strategy is part two of an existing strategy.
-
-#### Final Statement
-A letter to my future self, whom I know is currently successful - this marks a significant checkpoint in my journey.
+This strategy was conducted in 2026 during the rise of prediction markets. Despite its surge in popularity, the geographical operability renders this strategy unviable given its widespread prohibition.
 
 
 DISCLAIMER:
