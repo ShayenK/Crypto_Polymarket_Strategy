@@ -605,10 +605,11 @@ Implementation:
 
 Results:
 - realised results:
+  * *not viable*
 
 Interpretation:
 - model validation:
-  * "REFER TO EVALUATION METRICS"
+  * *not viable*
 
 Notes:
 - implications:
@@ -631,9 +632,15 @@ Evaluation Metrics:
   * same/similar equity curve
 
 Results:
+- realised results:
+  * *not viable*
 
 Interpretation:
+- model validation:
+  * *not viable*
 
 Notes:
 - implications
+  * *not viable*
 - observations
+  * *not viable*
