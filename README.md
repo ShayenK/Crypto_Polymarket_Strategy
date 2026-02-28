@@ -1,6 +1,23 @@
 # XGBoost Directional Prediction Algorithm for BTCUSD, ETHUSD, SOLUSD, XRPUSD: 1 hour Polymarket Contract #
 
 
+DISCLAIMER:
+-----------
+This software is provided "as is", without warranty of any kind, express or
+implied. The author(s) accept no responsibility or liability for any financial
+losses, damages, or consequences arising from the use of this software.
+
+This strategy has been formally deprecated. Historical performance does not
+guarantee future results. Prediction market conditions, regulatory environments,
+and model viability can change at any time.
+
+By using this software, you acknowledge that:
+  - You are doing so entirely at your own risk
+  - No ongoing support or maintenance will be provided
+  - The author(s) are not responsible for any outcomes
+  - This is not financial advice
+
+
 ## Description
 V2 of quantitative strategy aimed to target the 1 hour crypto predictions on polymarket. This version integrates concepts of asset cross-correlation with the previous existing XGBoost mechanism for high probability price directional identification. By collating all feature sets together, the model should expect to see an improvement in directional prediction accuracy from the V1 model where accuracy was 53-54% -> we should expect to see the values increase to around 55%+.
 
@@ -17,12 +34,12 @@ graph LR;
 ```
 
 
-## Maintainance & Implications
-There are frequent occurance where maintainance is required: such as monthly recalibration and/or vast underperformance over a set period. By navigating through the file directory you can locate the correct files.
+## Maintenance & Implications
+There are frequent occurrences where maintenance is required: such as monthly recalibration and/or vast underperformance over a set period. By navigating through the file directory you can locate the correct files.
 
 #### File Directory
 
-Maintainance will require in-depth knowledge of the directory
+Maintenance will require in-depth knowledge of the directory
 
 Algorithm:
 ```
@@ -82,25 +99,8 @@ tail risk thresholds includes:
 Ensure to update spreadsheet of monthly trade logs upon recalibration period. Furthermore clear the previous trade-logs to free up space.
 
 #### Future Considerations
-An effort to expand to retrieve additional volume or microstructure dynamics should be considered as the viability of this strategy using the current feature set is likely to wane lower than the 51% prediction accuracy mark. Should the win-rate ever start to show consistant degradation below the 51% mark, the strategy should deprecated.
+An effort to expand to retrieve additional volume or microstructure dynamics should be considered as the viability of this strategy using the current feature set is likely to wane lower than the 51% prediction accuracy mark. Should the win-rate ever start to show consistent degradation below the 51% mark, the strategy should deprecated.
 
 
 ## Statements
 This strategy was conducted in 2026 during the rise of prediction markets. Despite its surge in popularity, the geographical operability renders this strategy unviable given its widespread prohibition.
-
-
-DISCLAIMER:
------------
-This software is provided "as is", without warranty of any kind, express or
-implied. The author(s) accept no responsibility or liability for any financial
-losses, damages, or consequences arising from the use of this software.
-
-This strategy has been formally deprecated. Historical performance does not
-guarantee future results. Prediction market conditions, regulatory environments,
-and model viability can change at any time.
-
-By using this software, you acknowledge that:
-  - You are doing so entirely at your own risk
-  - No ongoing support or maintenance will be provided
-  - The author(s) are not responsible for any outcomes
-  - This is not financial advice
