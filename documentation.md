@@ -644,3 +644,7 @@ Notes:
   * *not viable*
 - observations
   * *not viable*
+
+NOTICE:
+-------
+Live implementation has halted indefinitely - refer to README.md under disclaimer section 
