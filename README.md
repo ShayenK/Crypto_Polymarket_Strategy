@@ -95,7 +95,18 @@ Strategy was conducted in 2026 during the rise of prediction markets. This strat
 A letter to my future self, whom I know is currently successful - this marks a significant checkpoint in my journey.
 
 
-NOTICE:
--------
-© 2026 Shayen Kesha.
-All rights reserved. This software is protected by copyright law. No part of this algorithm may be reproduced or transmitted in any form without prior written permission.
+DISCLAIMER:
+-----------
+This software is provided "as is", without warranty of any kind, express or
+implied. The author(s) accept no responsibility or liability for any financial
+losses, damages, or consequences arising from the use of this software.
+
+This strategy has been formally deprecated. Historical performance does not
+guarantee future results. Prediction market conditions, regulatory environments,
+and model viability can change at any time.
+
+By using this software, you acknowledge that:
+  - You are doing so entirely at your own risk
+  - No ongoing support or maintenance will be provided
+  - The author(s) are not responsible for any outcomes
+  - This is not financial advice
